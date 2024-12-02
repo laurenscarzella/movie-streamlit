@@ -129,3 +129,5 @@ with tab3:
     # Display the table
     st.write(f"Movies Released in {selected_year} by Genre:")
     st.dataframe(movie_count_by_genre)
+
+    
