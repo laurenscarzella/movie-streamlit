@@ -13,6 +13,16 @@ df["release_year"] = df["release_date"].dt.year
 # add a title
 st.title("Top Movies and Genre Insights")
 
+# add intro text
+st.markdown("""
+Welcome to my streamlit app!
+Here, you can explore the popularity of movies over time and analyze the trends across various genres.
+Use the tabs below to:
+- View the top movies by genre and popularity score
+- Analyze the average popularity score of movies across genres and release dates
+- See how many movies were released in each genre in a specific year
+""")
+
 # Add tabs for different pages
 tab1, tab2, tab3 = st.tabs(["Top Movies", "Trend Analysis by Genre", "Movies Released by Genre"])
 
