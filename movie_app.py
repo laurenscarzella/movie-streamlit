@@ -23,7 +23,7 @@ if genre_filter:
         y = "popularity",
         color = "primary_genre",
         title = f"Top 10 Most Popular Movies in {genre_filter} Genre",
-        labels = {"popularity": "Popularity", "title": "Movie Title"},
+        labels = {"popularity": "Popularity Score", "title": "Movie Title"},
         color_discrete_sequence = ['#008080']
     )
 
