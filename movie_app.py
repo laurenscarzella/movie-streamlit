@@ -126,6 +126,9 @@ with tab3:
     # Group by genre and count the number of movies released in the selected year
     movie_count_by_genre = filtered_by_year.groupby("primary_genre").size().reset_index(name='movie_count')
 
-    # Display the table
+    # Pivot the table to make genres as columns with movie counts as values
+    movie_count_pivot = movie_count_by_genre.set_index("primary_genre").T  # Transpose the DataFrame
+
+    # Display the wide table
     st.write(f"Movies Released in {selected_year} by Genre:")
-    st.dataframe(movie_count_by_genre)
+    st.dataframe(movie_count_pivot)
