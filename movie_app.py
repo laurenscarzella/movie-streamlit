@@ -11,7 +11,7 @@ df["release_date"] = pd.to_datetime(df["release_date"], errors="coerce")
 df["release_year"] = df["release_date"].dt.year
 
 # add a title
-st.title("Top Movies and Genre Trends")
+st.title("Top Movies and Genre Insights")
 
 # Add tabs for different pages
 tab1, tab2, tab3 = st.tabs(["Top Movies", "Trend Analysis by Genre", "Movies Released by Genre"])
@@ -35,8 +35,12 @@ with tab1:
         index=0
     )
 
-    # add a checkbox to show top 10 movies or top 50 movies (or as close as possible)
-    show_top_50 = st.checkbox("Show Top 50 Movies")
+    # replace checkbox with a radio button to select top movies
+    num_to_show = st.radio(
+        "Select number of top movies to display:",
+        options=[10, 20, 30, 40, 50],
+        index=0  # Default to 10
+    )
 
     # filter dataset by genre and release year
     if genre_filter:
@@ -46,8 +50,6 @@ with tab1:
             (df["release_year"] <= year_filter[1])
         ]
         sorted = filtered.sort_values(by="popularity", ascending=False)
-
-        num_to_show = 10 if not show_top_50 else min(50, len(sorted))
 
         # Create the figure for top movies
         if not sorted.empty:
@@ -130,5 +132,5 @@ with tab3:
     movie_count_pivot = movie_count_by_genre.set_index("primary_genre").T  # Transpose the DataFrame
 
     # Display the wide table
-    st.write(f"Movies Released in {selected_year} by Genre:")
+    st.write(f"Number of Movies Released in {selected_year} by Genre:")
     st.dataframe(movie_count_pivot)
