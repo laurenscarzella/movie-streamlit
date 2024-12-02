@@ -31,6 +31,9 @@ genre_filter = st.selectbox(
     index = 0
 )
 
+# add a checkbox to show top 10 movies or top 50 movies (or as close as possible)
+show_top_50 = st.checkbox("Show Top 50 Movies")
+
 # filter dataset by genre and release year
 if genre_filter:
     filtered = df[
@@ -40,14 +43,16 @@ if genre_filter:
     ]
     sorted = filtered.sort_values(by="popularity", ascending=False)
 
-    # create bar chart for top 10 movies
+    num_to_show = 10 if not show_top_50 else min(50, len(sorted))
+
+    # Create the figure for top movies
     if not sorted.empty:
         fig = px.bar(
-            sorted.head(10),
+            sorted.head(num_to_show),
             x="title",
             y="popularity",
             color="primary_genre",
-            title=f"Top 10 Most Popular Movies in {genre_filter} Genre ({year_filter[0]}-{year_filter[1]})",
+            title=f"Top {num_to_show} Most Popular Movies in {genre_filter} Genre ({year_filter[0]}-{year_filter[1]})",
             labels={"popularity": "Popularity Score", "title": "Movie Title"},
             color_discrete_sequence=['#008080']
         )
@@ -55,3 +60,7 @@ if genre_filter:
         st.plotly_chart(fig)
     else:
         st.write("No movies found in the selected year range and genre.")
+
+    # Add an expander to preview the filtered dataset
+    with st.expander("Show Filtered Data Table"):
+        st.dataframe(filtered)
